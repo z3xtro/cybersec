@@ -1,0 +1,14 @@
+# Buddy runs on a local Ollama model by default — install Ollama separately
+# (https://ollama.com); there's no pip package for it. See ollama/README.md.
+
+# Robust PNG/transparency handling for the sprites. Optional but recommended:
+# without it, Buddy falls back to Tk's native PNG loader, and without any usable
+# image it draws a coloured glyph instead.
+Pillow>=10.0
+
+# Optional cloud provider (BUDDY_PROVIDER=cloud). Not needed for the default
+# Ollama setup — uncomment if you want the hosted-API fallback.
+# anthropic>=0.40
+
+# NOTE: Tkinter ships with CPython on Windows/macOS. On some Linux distros it is
+# a separate system package (e.g. `sudo apt install python3-tk`), not a pip one.

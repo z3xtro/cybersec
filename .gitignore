@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+env/
+
+# Secrets — never commit your API key
+.env
+*.env
+
+# Training artifacts — adapters, checkpoints, and datasets can be large
+training/out/
+training/data/*.jsonl
+training/data/writeups/*
+!training/data/writeups/.gitkeep
+
+# Model weights / caches
+*.safetensors
+*.gguf
+.cache/
+
+# Ollama export build dir (llama.cpp clone + GGUF artifacts)
+ollama/.build/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

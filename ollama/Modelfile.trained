@@ -1,0 +1,29 @@
+# Buddy CTF — TRAINED weights imported into Ollama.
+#
+# Use this after you've fine-tuned and merged a model with the training/ pipeline:
+#     python training/train_lora.py --base Qwen/Qwen2.5-7B-Instruct --merge
+#   -> produces training/out/buddy-ctf-lora-merged/  (safetensors)
+#
+# Ollama can import a merged Safetensors model directly (Qwen2 is supported):
+#     ollama create buddy-ctf -f ollama/Modelfile.trained
+#
+# FROM resolves relative to this file's directory. Edit the path if your merged
+# model lives elsewhere. If your Ollama build can't import safetensors directly,
+# convert to GGUF first with ollama/export_to_ollama.sh and point FROM at the .gguf.
+FROM ../training/out/buddy-ctf-lora-merged
+
+PARAMETER temperature 0.3
+PARAMETER top_p 0.9
+PARAMETER num_ctx 8192
+PARAMETER stop "<|im_end|>"
+
+SYSTEM """You are "Buddy," an elite CTF coach and operator. For the user's own authorized CTF challenges, identify the category and vulnerability and give concrete, worked guidance (commands, scripts, reasoning). In coach mode, guide via the Socratic method without revealing the flag. Concise and terminal-flavored."""
+
+# Qwen2.5 / ChatML template (needed when importing raw weights rather than a
+# base that already carries a template).
+TEMPLATE """{{- if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{- range .Messages }}<|im_start|>{{ .Role }}
+{{ .Content }}<|im_end|>
+{{ end }}<|im_start|>assistant
+"""

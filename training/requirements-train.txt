@@ -1,0 +1,17 @@
+# Fine-tuning + local serving dependencies.
+# GPU strongly recommended (QLoRA runs on a single 12-16GB card for 7B models).
+# These are intentionally separate from the app's runtime requirements.txt.
+
+torch>=2.2
+transformers>=4.44
+peft>=0.12
+trl>=0.9
+datasets>=2.20
+accelerate>=0.33
+
+# QLoRA 4-bit quantization (CUDA only). Skip on CPU/macOS and set --no-4bit.
+bitsandbytes>=0.43 ; platform_system == "Linux"
+
+# Local OpenAI-compatible inference server (training/serve.py).
+fastapi>=0.110
+uvicorn>=0.29
